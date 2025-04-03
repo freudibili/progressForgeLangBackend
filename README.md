@@ -11,7 +11,12 @@ A FastAPI-based REST API for accessing vocabulary data in multiple languages.
 
 ## Setup
 
-### Local Development
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Running the Application
 
 1. Clone the repository:
 
@@ -20,68 +25,21 @@ git clone <repository-url>
 cd progressForgeLangBackend
 ```
 
-2. Create and activate a virtual environment:
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Create a `.env` file in the root directory with your database credentials:
-
-```env
-DB_HOST=your_host
-DB_NAME=your_database
-DB_USER=your_user
-DB_PASSWORD=your_password
-DB_PORT=your_port
-```
-
-### Docker Setup
-
-1. Make sure you have Docker and Docker Compose installed
-
-2. Build and start the containers:
+2. Start the containers:
 
 ```bash
 docker-compose up --build
 ```
 
-3. To run in detached mode:
+The API will be available at `http://localhost:8000`
 
-```bash
-docker-compose up -d
-```
+### Docker Commands
 
-4. To stop the containers:
-
-```bash
-docker-compose down
-```
-
-## Running the Application
-
-### Local Development
-
-Start the server:
-
-```bash
-uvicorn src.main:app --reload
-```
-
-### Docker
-
-```bash
-docker-compose up
-```
-
-The server will start at `http://localhost:8000`
+- Start containers: `docker-compose up`
+- Start in detached mode: `docker-compose up -d`
+- Stop containers: `docker-compose down`
+- Rebuild and start: `docker-compose up --build`
+- View logs: `docker-compose logs -f`
 
 ## API Endpoints
 
@@ -122,6 +80,7 @@ project/
 ├── requirements.txt        # Project dependencies
 ├── Dockerfile             # Docker configuration
 ├── docker-compose.yml     # Docker Compose configuration
+├── my_postgres_backup.sql # Database initialization
 └── .env                   # Environment variables
 ```
 
@@ -142,7 +101,7 @@ import requests
 response = requests.get('http://localhost:8000/vocabulary')
 
 # Get vocabulary for a specific level
-response = requests.get('http://localhost:8000/vocabulary/b1')
+response = requests.get('http://localhost:8000/vocabulary/2a6ca7bd-b274-44d9-aebb-4eb60885908d')
 
 # Get all levels
 response = requests.get('http://localhost:8000/levels')
@@ -163,7 +122,7 @@ Each vocabulary entry has the following structure:
     "er": "string",
     "af": "string"
   },
-  "levelId": "string",
+  "level_id": "string",
   "type": "string",
   "example": {
     "de": "string",
