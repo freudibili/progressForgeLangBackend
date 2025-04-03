@@ -6,30 +6,47 @@ A FastAPI-based REST API for accessing vocabulary data in multiple languages.
 
 - Get all vocabulary entries
 - Get vocabulary by level
-- Search vocabulary by word
-- Get vocabulary by word type
-- Get specific vocabulary entry by ID
+- Get all levels
 - Support for multiple languages (German, French, English, Ukrainian, Tigrinya, Dari/Farsi)
 
 ## Setup
 
-1. Create a virtual environment (recommended):
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd progressForgeLangBackend
+```
+
+2. Create and activate a virtual environment:
 
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-2. Install dependencies:
+3. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Run the server:
+4. Create a `.env` file in the root directory with your database credentials:
+
+```env
+DB_HOST=your_host
+DB_NAME=your_database
+DB_USER=your_user
+DB_PASSWORD=your_password
+DB_PORT=your_port
+```
+
+## Running the Application
+
+Start the server:
 
 ```bash
-python main.py
+uvicorn src.main:app --reload
 ```
 
 The server will start at `http://localhost:8000`
@@ -42,11 +59,12 @@ The server will start at `http://localhost:8000`
 
 ### Vocabulary
 
-- `GET /vocabulary`: Get all vocabulary entries
+- `GET /vocabulary`: Get all vocabulary entries (optional limit parameter)
 - `GET /vocabulary/{level_id}`: Get vocabulary entries for a specific level
-- `GET /vocabulary/search/{word}`: Search vocabulary entries by word
-- `GET /vocabulary/type/{word_type}`: Get vocabulary entries by word type
-- `GET /vocabulary/entry/{entry_id}`: Get a specific vocabulary entry by ID
+
+### Levels
+
+- `GET /levels`: Get all available levels
 
 ## API Documentation
 
@@ -54,6 +72,31 @@ Once the server is running, you can access:
 
 - Interactive API documentation: `http://localhost:8000/docs`
 - Alternative API documentation: `http://localhost:8000/redoc`
+
+## Project Structure
+
+```
+project/
+├── src/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI app setup
+│   │   ├── __init__.py
+│   │   └── schemas.py      # Pydantic models
+│   ├── database.py         # Database connection
+│   └── api/
+│       ├── __init__.py
+│       └── routes.py       # API endpoints
+├── requirements.txt        # Project dependencies
+└── .env                    # Environment variables
+```
+
+## Dependencies
+
+- FastAPI
+- Uvicorn
+- psycopg2-binary
+- python-dotenv
+- pydantic
 
 ## Example Usage
 
@@ -66,14 +109,8 @@ response = requests.get('http://localhost:8000/vocabulary')
 # Get vocabulary for a specific level
 response = requests.get('http://localhost:8000/vocabulary/b1')
 
-# Search for a word
-response = requests.get('http://localhost:8000/vocabulary/search/hello')
-
-# Get vocabulary by type
-response = requests.get('http://localhost:8000/vocabulary/type/noun')
-
-# Get specific entry
-response = requests.get('http://localhost:8000/vocabulary/entry/123')
+# Get all levels
+response = requests.get('http://localhost:8000/levels')
 ```
 
 ## Data Structure
