@@ -44,4 +44,16 @@ ENV/
 
 # Database
 *.sqlite3
-*.db 
+*.db
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# macOS
+.AppleDouble
+._*
+
+# Backup files
+*_backup.sql
+!my_postgres_backup.sql 

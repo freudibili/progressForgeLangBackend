@@ -11,6 +11,8 @@ A FastAPI-based REST API for accessing vocabulary data in multiple languages.
 
 ## Setup
 
+### Local Development
+
 1. Clone the repository:
 
 ```bash
@@ -41,12 +43,42 @@ DB_PASSWORD=your_password
 DB_PORT=your_port
 ```
 
+### Docker Setup
+
+1. Make sure you have Docker and Docker Compose installed
+
+2. Build and start the containers:
+
+```bash
+docker-compose up --build
+```
+
+3. To run in detached mode:
+
+```bash
+docker-compose up -d
+```
+
+4. To stop the containers:
+
+```bash
+docker-compose down
+```
+
 ## Running the Application
+
+### Local Development
 
 Start the server:
 
 ```bash
 uvicorn src.main:app --reload
+```
+
+### Docker
+
+```bash
+docker-compose up
 ```
 
 The server will start at `http://localhost:8000`
@@ -80,6 +112,7 @@ project/
 ├── src/
 │   ├── __init__.py
 │   ├── main.py              # FastAPI app setup
+│   ├── models/
 │   │   ├── __init__.py
 │   │   └── schemas.py      # Pydantic models
 │   ├── database.py         # Database connection
@@ -87,7 +120,9 @@ project/
 │       ├── __init__.py
 │       └── routes.py       # API endpoints
 ├── requirements.txt        # Project dependencies
-└── .env                    # Environment variables
+├── Dockerfile             # Docker configuration
+├── docker-compose.yml     # Docker Compose configuration
+└── .env                   # Environment variables
 ```
 
 ## Dependencies
